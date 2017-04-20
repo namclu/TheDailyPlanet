@@ -1,7 +1,9 @@
-package com.namclu.android.thedailyplanet;
+package com.namclu.android.thedailyplanet.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.namclu.android.thedailyplanet.R;
 
 public class DailyPlanetActivity extends AppCompatActivity {
 
