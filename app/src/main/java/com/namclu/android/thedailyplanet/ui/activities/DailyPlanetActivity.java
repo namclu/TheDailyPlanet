@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.namclu.android.thedailyplanet.R;
 import com.namclu.android.thedailyplanet.api.models.News;
+import com.namclu.android.thedailyplanet.api.NewsLoader;
 import com.namclu.android.thedailyplanet.ui.adapters.NewsItemsAdapter;
 
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<List<News>>{
 
     private static final String TAG = DailyPlanetActivity.class.getName();
+    private static final String URL =
+            "http://content.guardianapis.com/search?q=debates&api-key=test";
 
     private List<News> mNews;
     private NewsItemsAdapter mNewsItemsAdapter;
@@ -43,6 +47,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         mRecyclerView.setAdapter(mNewsItemsAdapter);
 
         // Add dummy data
+        /*mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
         mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
         mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
         mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
@@ -51,8 +56,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
         mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
         mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
+        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));*/
 
         try {
             ConnectivityManager connectivityManager =
@@ -61,23 +65,32 @@ public class DailyPlanetActivity extends AppCompatActivity implements
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
             if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-
+                getLoaderManager().initLoader(1, null, this).forceLoad();
             } else {
 
             }
         } catch (Exception e) {
-
+            Log.e(TAG, "Error w internet connection");
         }
     }
 
+    /* Methods for LoaderManager.LoaderCallbacks */
+
+    /*
+    * Called when the system needs a new loader to be created. Your code should create a Loader
+    * object and return it to the system.
+    * */
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        return null;
+        return new NewsLoader(this, URL);
     }
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
-
+        if (news != null && !news.isEmpty()) {
+            mNews.addAll(news);
+            mNewsItemsAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
