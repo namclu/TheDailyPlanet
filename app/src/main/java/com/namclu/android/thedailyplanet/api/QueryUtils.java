@@ -165,6 +165,7 @@ public final class QueryUtils {
 
                     JSONObject currentNewsObject = newsResultsArray.getJSONObject(i);
 
+                    // Get "webTitle" from JSONobject
                     String newsTitle;
                     if (currentNewsObject.has("webTitle")) {
                         newsTitle = currentNewsObject.getString("webTitle");
@@ -173,7 +174,32 @@ public final class QueryUtils {
                         newsTitle = "No title";
                     }
 
-                    news.add(new News(newsTitle, "Section", "DatePublished", "WebUrl"));
+                    // Get "sectionName" from JSONobject
+                    String newsSection;
+                    if (currentNewsObject.has("sectionName")) {
+                        newsSection = currentNewsObject.getString("sectionName");
+                    } else {
+                        newsSection = "No section";
+                    }
+
+                    // Get "webPublicationDate" from JSONobject
+                    String newsPublicationDate;
+                    if (currentNewsObject.has("webPublicationDate")) {
+                        newsPublicationDate = currentNewsObject.getString("webPublicationDate");
+                    } else {
+                        newsPublicationDate = "No date";
+                    }
+
+                    // Get "webUrl" from JSONobject
+                    String newsWebUrl;
+                    if (currentNewsObject.has("webUrl")) {
+                        newsWebUrl = currentNewsObject.getString("webUrl");
+                    } else {
+                        newsWebUrl = null;
+                    }
+
+                    // Create a new News object
+                    news.add(new News(newsTitle, newsSection, newsPublicationDate, newsWebUrl));
                 }
             }
         } catch (JSONException e) {

@@ -46,18 +46,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mNewsItemsAdapter);
 
-        // Add dummy data
-        /*mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));*/
-
+        // Check for network connectivity before attempting to load data
         try {
             ConnectivityManager connectivityManager =
                     (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
