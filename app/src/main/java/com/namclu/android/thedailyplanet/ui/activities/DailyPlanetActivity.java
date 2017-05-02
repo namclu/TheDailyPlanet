@@ -46,18 +46,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mNewsItemsAdapter);
 
-        // Add dummy data
-        /*mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));
-        mNews.add(new News("Title", "Section", "DatePublished", "Web URL"));*/
-
+        // Check for network connectivity before attempting to load data
         try {
             ConnectivityManager connectivityManager =
                     (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -82,11 +71,13 @@ public class DailyPlanetActivity extends AppCompatActivity implements
     * */
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
+        Log.v(TAG, "inside onCreateLoader");
         return new NewsLoader(this, URL);
     }
 
     @Override
     public void onLoadFinished(Loader<List<News>> loader, List<News> news) {
+        Log.v(TAG, "inside onLoadFinished");
         if (news != null && !news.isEmpty()) {
             mNews.addAll(news);
             mNewsItemsAdapter.notifyDataSetChanged();
