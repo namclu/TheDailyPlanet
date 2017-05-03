@@ -11,10 +11,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.namclu.android.thedailyplanet.R;
-import com.namclu.android.thedailyplanet.api.models.News;
 import com.namclu.android.thedailyplanet.api.NewsLoader;
+import com.namclu.android.thedailyplanet.api.models.News;
 import com.namclu.android.thedailyplanet.ui.adapters.NewsItemsAdapter;
 
 import java.util.ArrayList;
@@ -61,6 +62,14 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         } catch (Exception e) {
             Log.e(TAG, "Error w internet connection");
         }
+
+        // Setup RecyclerView to respond to clicks
+        mRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     /* Methods for LoaderManager.LoaderCallbacks */
