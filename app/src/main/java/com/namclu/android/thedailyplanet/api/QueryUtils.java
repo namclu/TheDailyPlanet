@@ -169,7 +169,6 @@ public final class QueryUtils {
                     String newsTitle;
                     if (currentNewsObject.has("webTitle")) {
                         newsTitle = currentNewsObject.getString("webTitle");
-                        Log.v(TAG, "webTitle = " + newsTitle);
                     } else {
                         newsTitle = "No title";
                     }

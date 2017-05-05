@@ -2,16 +2,17 @@ package com.namclu.android.thedailyplanet.ui.activities;
 
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
 import com.namclu.android.thedailyplanet.R;
 import com.namclu.android.thedailyplanet.api.NewsLoader;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DailyPlanetActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<List<News>>{
+        LoaderManager.LoaderCallbacks<List<News>>,
+        NewsItemsAdapter.OnItemClickListener {
 
     private static final String TAG = DailyPlanetActivity.class.getName();
     private static final String URL =
@@ -39,7 +41,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
 
         // Init fields
         mNews = new ArrayList<>();
-        mNewsItemsAdapter = new NewsItemsAdapter(mNews);
+        mNewsItemsAdapter = new NewsItemsAdapter(mNews, this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_daily_planet);
 
         // RecyclerView stuff
@@ -62,14 +64,6 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         } catch (Exception e) {
             Log.e(TAG, "Error w internet connection");
         }
-
-        // Setup RecyclerView to respond to clicks
-        mRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     /* Methods for LoaderManager.LoaderCallbacks */
@@ -94,5 +88,12 @@ public class DailyPlanetActivity extends AppCompatActivity implements
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
 
+    }
+
+    /* Method for NewsAdapter.OnItemClickListener */
+    @Override
+    public void onItemClicked(News newsItem) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsItem.getNewsWebUrl()));
+        startActivity(intent);
     }
 }
