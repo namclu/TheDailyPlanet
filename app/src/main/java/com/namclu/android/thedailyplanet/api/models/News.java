@@ -25,7 +25,7 @@ public class News {
         setNewsTitle(newsTitle);
         setNewsSectionName(newsSectionName);
         setNewsDatePublished(newsDatePublished);
-        setnNewsWebUrl(newsWebUrl);
+        setNewsWebUrl(newsWebUrl);
     }
     /* Setter and getter methods */
 
@@ -57,7 +57,7 @@ public class News {
         return mNewsWebUrl;
     }
 
-    public void setnNewsWebUrl(String newsWebUrl) {
+    public void setNewsWebUrl(String newsWebUrl) {
         mNewsWebUrl = newsWebUrl;
     }
 }

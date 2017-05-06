@@ -27,7 +27,7 @@ import java.util.List;
  * Helper method to request and receive news info from The Guardian news API
  */
 
-public final class QueryUtils {
+final class QueryUtils {
 
     private static final String TAG = QueryUtils.class.getSimpleName();
 
@@ -47,8 +47,7 @@ public final class QueryUtils {
 
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
-        List<News> news = new ArrayList<>();
-
+        List<News> news;
 
         try {
             jsonResponse = makeHttpRequest(url);
@@ -63,7 +62,7 @@ public final class QueryUtils {
     /*
      * Returns new URL object from the given string URL.
      * */
-    public static URL createUrl(String stringUrl) {
+    private static URL createUrl(String stringUrl) {
 
         URL url = null;
 
@@ -78,7 +77,7 @@ public final class QueryUtils {
     /*
     * Make an HTTP request from the given URL and return a String as the response.
     * */
-    public static String makeHttpRequest(URL url) throws IOException {
+    private static String makeHttpRequest(URL url) throws IOException {
 
         String jsonResponse = null;
 
@@ -108,7 +107,7 @@ public final class QueryUtils {
                 Log.e(TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(TAG, "Problem retrieving JSON results.", e);;
+            Log.e(TAG, "Problem retrieving JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -124,7 +123,7 @@ public final class QueryUtils {
     * Convert the binary data {@link InputStream} into a String which contains the
     * whole JSON response from the server.
     * */
-    public static String readFromStream(InputStream inputStream) throws IOException {
+    private static String readFromStream(InputStream inputStream) throws IOException {
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -147,7 +146,7 @@ public final class QueryUtils {
     * Return a List of {@link News} objects by parsing out information
     * about the news from the input jsonResponse string.
     * */
-    public static List<News> extractNewsFromJson(String jsonResponse) {
+    private static List<News> extractNewsFromJson(String jsonResponse) {
 
         if (TextUtils.isEmpty(jsonResponse)) {
             return null;

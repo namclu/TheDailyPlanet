@@ -31,11 +31,10 @@ public class DailyPlanetActivity extends AppCompatActivity implements
 
     private static final String TAG = DailyPlanetActivity.class.getName();
     private static final String URL =
-            "http://content.guardianapis.com/search?q=debates&api-key=test";
+            "https://content.guardianapis.com/search?q=debates&api-key=test";
 
     private List<News> mNews;
     private NewsItemsAdapter mNewsItemsAdapter;
-    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +44,19 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         // Init fields
         mNews = new ArrayList<>();
         mNewsItemsAdapter = new NewsItemsAdapter(mNews, this);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_daily_planet);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_daily_planet);
 
         // Setup divider object at end of each news_list_item
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 DividerItemDecoration.VERTICAL);
         Drawable verticalDivider = ContextCompat.getDrawable(getApplicationContext(), R.drawable.vertical_divider);
         mDividerItemDecoration.setDrawable(verticalDivider);
 
         // RecyclerView stuff
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(mDividerItemDecoration);
-        mRecyclerView.setAdapter(mNewsItemsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(mDividerItemDecoration);
+        recyclerView.setAdapter(mNewsItemsAdapter);
 
         // Check for network connectivity before attempting to load data
         try {
@@ -104,6 +103,8 @@ public class DailyPlanetActivity extends AppCompatActivity implements
     @Override
     public void onItemClicked(News newsItem) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsItem.getNewsWebUrl()));
-        startActivity(intent);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
