@@ -4,12 +4,15 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -44,9 +47,16 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         mNewsItemsAdapter = new NewsItemsAdapter(mNews, this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_daily_planet);
 
+        // Setup divider object at end of each news_list_item
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        Drawable verticalDivider = ContextCompat.getDrawable(getApplicationContext(), R.drawable.vertical_divider);
+        mDividerItemDecoration.setDrawable(verticalDivider);
+
         // RecyclerView stuff
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(mDividerItemDecoration);
         mRecyclerView.setAdapter(mNewsItemsAdapter);
 
         // Check for network connectivity before attempting to load data
