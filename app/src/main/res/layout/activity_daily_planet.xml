@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context="com.namclu.android.thedailyplanet.ui.activities.DailyPlanetActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_daily_planet"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_daily_planet"
+        app:layout_constraintLeft_toLeftOf="@+id/recycler_daily_planet"
+        app:layout_constraintRight_toRightOf="@+id/recycler_daily_planet"
+        app:layout_constraintTop_toTopOf="@+id/recycler_daily_planet"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_daily_planet"
         android:layout_width="0dp"

@@ -16,6 +16,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.namclu.android.thedailyplanet.R;
 import com.namclu.android.thedailyplanet.api.NewsLoader;
@@ -35,6 +37,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
 
     private List<News> mNews;
     private NewsItemsAdapter mNewsItemsAdapter;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         mNews = new ArrayList<>();
         mNewsItemsAdapter = new NewsItemsAdapter(mNews, this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_daily_planet);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_daily_planet);
 
         // Setup divider object at end of each news_list_item
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -92,6 +96,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
             mNews.addAll(news);
             mNewsItemsAdapter.notifyDataSetChanged();
         }
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
