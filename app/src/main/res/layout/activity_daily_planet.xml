@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.namclu.android.thedailyplanet.ui.activities.DailyPlanetActivity">
 
+    <!-- Layout for progress bar -->
     <ProgressBar
         android:id="@+id/progress_daily_planet"
         style="@style/Widget.AppCompat.ProgressBar"
@@ -17,6 +18,18 @@
         app:layout_constraintRight_toRightOf="@+id/recycler_daily_planet"
         app:layout_constraintTop_toTopOf="@+id/recycler_daily_planet"/>
 
+    <!-- Layout for an empty list -->
+    <TextView
+        android:id="@+id/empty_text_daily_planet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Empty TextView"/>
+
+    <!-- Layout for RecyclerView -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_daily_planet"
         android:layout_width="0dp"

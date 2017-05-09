@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.namclu.android.thedailyplanet.R;
 import com.namclu.android.thedailyplanet.api.NewsLoader;
@@ -38,6 +39,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
     private List<News> mNews;
     private NewsItemsAdapter mNewsItemsAdapter;
     private ProgressBar mProgressBar;
+    private TextView mEmptyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         mNewsItemsAdapter = new NewsItemsAdapter(mNews, this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_daily_planet);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_daily_planet);
+        mEmptyTextView = (TextView) findViewById(R.id.empty_text_daily_planet);
 
         // Setup divider object at end of each news_list_item
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -72,7 +75,8 @@ public class DailyPlanetActivity extends AppCompatActivity implements
             if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
                 getLoaderManager().initLoader(1, null, this).forceLoad();
             } else {
-
+                mEmptyTextView.setText(R.string.error_message_network);
+                mProgressBar.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             Log.e(TAG, "Error w internet connection");
