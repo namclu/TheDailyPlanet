@@ -76,7 +76,6 @@ public class DailyPlanetActivity extends AppCompatActivity implements
             public void onRefresh() {
                 mNewsItemsAdapter.clear();
                 fetchNews();
-                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -130,6 +129,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
                 mEmptyTextView.setText(R.string.error_message_network);
                 mProgressBar.setVisibility(View.GONE);
             }
+            mSwipeRefreshLayout.setRefreshing(false);
         } catch (Exception e) {
             Log.e(TAG, "Error w internet connection");
         }
