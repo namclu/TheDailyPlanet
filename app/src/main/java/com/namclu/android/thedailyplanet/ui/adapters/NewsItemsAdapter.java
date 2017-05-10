@@ -1,6 +1,7 @@
 package com.namclu.android.thedailyplanet.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.ViewHolder> {
 
-    public static final String TAG = NewsItemsAdapter.class.getName();
+    private static final String TAG = NewsItemsAdapter.class.getName();
 
     private final List<News> mNews;
     private final OnItemClickListener mClickListener;
@@ -73,7 +74,15 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.View
         }
     }
 
+    // Interface to respond when a News item is clicked
     public interface OnItemClickListener {
         void onItemClicked(News newsItem);
+    }
+
+    // Clear all elements of RecyclerView
+    public void clear() {
+        mNews.clear();
+        notifyDataSetChanged();
+        Log.v(TAG, "inside onClear()");
     }
 }

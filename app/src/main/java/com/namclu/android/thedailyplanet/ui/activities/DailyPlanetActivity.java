@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -40,6 +41,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
     private NewsItemsAdapter mNewsItemsAdapter;
     private ProgressBar mProgressBar;
     private TextView mEmptyTextView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_daily_planet);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_daily_planet);
         mEmptyTextView = (TextView) findViewById(R.id.empty_text_daily_planet);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_daily_planet);
 
         // Setup divider object at end of each news_list_item
         DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -64,6 +67,32 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(mDividerItemDecoration);
         recyclerView.setAdapter(mNewsItemsAdapter);
+
+        // SwipeRefresh stuff
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNewsItemsAdapter.clear();
+                /*getLoaderManager().initLoader(1, null, DailyPlanetActivity.this).forceLoad();
+                Toast.makeText(DailyPlanetActivity.this, "Data refreshed", Toast.LENGTH_SHORT).show();*/
+                try {
+                    ConnectivityManager connectivityManager =
+                            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+                    if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+                        getLoaderManager().initLoader(1, null, DailyPlanetActivity.this).forceLoad();
+                    } else {
+                        mEmptyTextView.setText(R.string.error_message_network);
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error w internet connection");
+                }
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         // Check for network connectivity before attempting to load data
         try {
