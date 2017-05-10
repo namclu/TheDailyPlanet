@@ -1,7 +1,6 @@
 package com.namclu.android.thedailyplanet.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +82,5 @@ public class NewsItemsAdapter extends RecyclerView.Adapter<NewsItemsAdapter.View
     public void clear() {
         mNews.clear();
         notifyDataSetChanged();
-        Log.v(TAG, "inside onClear()");
     }
 }

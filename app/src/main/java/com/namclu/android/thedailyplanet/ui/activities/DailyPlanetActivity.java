@@ -68,48 +68,17 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         recyclerView.addItemDecoration(mDividerItemDecoration);
         recyclerView.setAdapter(mNewsItemsAdapter);
 
+        fetchNews();
+
         // SwipeRefresh stuff
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mNewsItemsAdapter.clear();
-                /*getLoaderManager().initLoader(1, null, DailyPlanetActivity.this).forceLoad();
-                Toast.makeText(DailyPlanetActivity.this, "Data refreshed", Toast.LENGTH_SHORT).show();*/
-                try {
-                    ConnectivityManager connectivityManager =
-                            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-                    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-                    if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-                        getLoaderManager().initLoader(1, null, DailyPlanetActivity.this).forceLoad();
-                    } else {
-                        mEmptyTextView.setText(R.string.error_message_network);
-                        mProgressBar.setVisibility(View.GONE);
-                    }
-                } catch (Exception e) {
-                    Log.e(TAG, "Error w internet connection");
-                }
+                fetchNews();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        // Check for network connectivity before attempting to load data
-        try {
-            ConnectivityManager connectivityManager =
-                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-            if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-                getLoaderManager().initLoader(1, null, this).forceLoad();
-            } else {
-                mEmptyTextView.setText(R.string.error_message_network);
-                mProgressBar.setVisibility(View.GONE);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error w internet connection");
-        }
     }
 
     /* Methods for LoaderManager.LoaderCallbacks */
@@ -143,6 +112,26 @@ public class DailyPlanetActivity extends AppCompatActivity implements
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsItem.getNewsWebUrl()));
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
+        }
+    }
+
+    /* Method call to fetch News data */
+    private void fetchNews() {
+        // Check for network connectivity before attempting to load data
+        try {
+            ConnectivityManager connectivityManager =
+                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+                getLoaderManager().initLoader(1, null, this).forceLoad();
+            } else {
+                mEmptyTextView.setText(R.string.error_message_network);
+                mProgressBar.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error w internet connection");
         }
     }
 }
