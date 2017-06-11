@@ -125,6 +125,7 @@ public class DailyPlanetActivity extends AppCompatActivity implements
 
             if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
                 getLoaderManager().initLoader(1, null, this).forceLoad();
+                mEmptyTextView.setVisibility(View.GONE);
             } else {
                 mEmptyTextView.setText(R.string.error_message_network);
                 mProgressBar.setVisibility(View.GONE);
